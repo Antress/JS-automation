@@ -23,3 +23,19 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('getCredentials', () => {
+    return cy.fixture('config').then((config) => {
+      return {
+        username: config.username,
+        password: config.password,
+        unvalid_username: config.unvalid_username,
+        unvalid_password: config.unvalid_password,
+        email: config.email,
+        unvalid_email: config.unvalid_email,
+        phone_number: config.phone_number,
+        unvalid_phone_number: config.unvalid_phone_number
+      };
+    });
+  });
+

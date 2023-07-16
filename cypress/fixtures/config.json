@@ -1,0 +1,10 @@
+{
+    "username": "admin",
+    "password": "admin",
+    "unvalid_username": "///",
+    "unvalid_password": "///",
+    "email": "automationTest@gmail.com",
+    "unvalid_email": "///",
+    "phone_number": "0000000000",
+    "unvalid_phone_number": "///"
+}

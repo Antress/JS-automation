@@ -1,4 +1,5 @@
-describe('login site ',() => {
+describe('login site ',() => {    //Here you can see auto test for login page
+
     beforeEach(()=>{
         cy.visit('https://parabank.parasoft.com/')
         cy.title().should('include','ParaBank');
@@ -10,12 +11,14 @@ describe('login site ',() => {
     })
 
     it('login  with unvalid credentials',() => {
-        cy.get('input[name="username"]').type('///')
-        cy.get('input[name="password"]').type('///')
+        cy.getCredentials().then((credentials) => {
+        cy.get('input[name="username"]').type(credentials.unvalid_username)
+        cy.get('input[name="password"]').type(credentials.unvalid_password)
         cy.get('[type="submit"]').click()
-        cy.get('[class="error"')
+        cy.get('[class="error"]')
         .should('be.visible')
         .should('have.text','The username and password could not be verified.')
+        })
     })
 
     it('Error message is displayed after leaving all fields empty',() => {
@@ -47,4 +50,4 @@ describe('login site ',() => {
         cy.get('[type="submit"]').click()
         cy.contains('h1.title', 'Accounts Overview').should('be.visible');
     })
-})
+  })
