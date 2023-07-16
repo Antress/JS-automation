@@ -1,5 +1,5 @@
 describe('login site ',() => {
-    before(()=>{
+    beforeEach(()=>{
         cy.visit('https://parabank.parasoft.com/')
         cy.title().should('include','ParaBank');
     })
@@ -10,12 +10,41 @@ describe('login site ',() => {
     })
 
     it('login  with unvalid credentials',() => {
-        cy.visit('https://parabank.parasoft.com/')
         cy.get('input[name="username"]').type('///')
         cy.get('input[name="password"]').type('///')
         cy.get('[type="submit"]').click()
         cy.get('[class="error"')
         .should('be.visible')
         .should('have.text','The username and password could not be verified.')
+    })
+
+    it('Error message is displayed after leaving all fields empty',() => {
+        cy.get('[type="submit"]').click()
+        cy.get('[class="error"')
+        .should('be.visible')
+        .should('have.text','Please enter a username and password.')
+    })
+
+    it('Error message is displayed after leaving password field empty',() => {
+        cy.get('input[name="password"]').type('admin')
+        cy.get('[type="submit"]').click()
+        cy.get('[class="error"')
+        .should('be.visible')
+        .should('have.text','Please enter a username and password.')
+    })
+
+    it('Error message is displayed after leaving username field empty',() => {
+    cy.get('input[name="username"]').type('admin')
+    cy.get('[type="submit"]').click()
+    cy.get('[class="error"')
+    .should('be.visible')
+    .should('have.text','Please enter a username and password.')
+    })
+
+    it('login  with valid credentials',() => {
+        cy.get('input[name="username"]').type('admin')
+        cy.get('input[name="password"]').type('admin')
+        cy.get('[type="submit"]').click()
+        cy.contains('h1.title', 'Accounts Overview').should('be.visible');
     })
 })
