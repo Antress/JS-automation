@@ -1,3 +1,6 @@
+
+const loginPageLocators = require('../loginPageLocators')
+
 describe('login site ',() => {    //Here you can see auto test for login page
 
     beforeEach(()=>{
@@ -6,48 +9,54 @@ describe('login site ',() => {    //Here you can see auto test for login page
     })
 
     it('login fields are displayed',() => {
-        cy.get('input[name="username"]').should('be.visible')
-        cy.get('input[name="password"]').should('be.visible')
+        cy.get(loginPageLocators.usernameInput).should('be.visible')
+        cy.get(loginPageLocators.passwordInput).should('be.visible')
     })
 
     it('login  with unvalid credentials',() => {
         cy.getCredentials().then((credentials) => {
-        cy.get('input[name="username"]').type(credentials.unvalid_username)
-        cy.get('input[name="password"]').type(credentials.unvalid_password)
-        cy.get('[type="submit"]').click()
-        cy.get('[class="error"]')
+        cy.get(loginPageLocators.usernameInput).type(credentials.unvalid_username)
+        cy.get(loginPageLocators.passwordInput).type(credentials.unvalid_password)
+        cy.get(loginPageLocators.loginButton).click()
+        cy.get(loginPageLocators.errorMessage)
         .should('be.visible')
-        .should('have.text','The username and password could not be verified.')
+        .should('have.text','An internal error has occurred and has been logged.')
         })
     })
 
     it('Error message is displayed after leaving all fields empty',() => {
-        cy.get('[type="submit"]').click()
-        cy.get('[class="error"')
+        cy.get(loginPageLocators.loginButton).click()
+        cy.get(loginPageLocators.errorMessage)
         .should('be.visible')
         .should('have.text','Please enter a username and password.')
     })
 
     it('Error message is displayed after leaving password field empty',() => {
-        cy.get('input[name="password"]').type('admin')
-        cy.get('[type="submit"]').click()
-        cy.get('[class="error"')
+        cy.getCredentials().then((credentials) => {
+        cy.get(loginPageLocators.passwordInput).type(credentials.password)
+        cy.get(loginPageLocators.loginButton).click()
+        cy.get(loginPageLocators.errorMessage)
         .should('be.visible')
         .should('have.text','Please enter a username and password.')
+        })
     })
 
     it('Error message is displayed after leaving username field empty',() => {
-    cy.get('input[name="username"]').type('admin')
-    cy.get('[type="submit"]').click()
-    cy.get('[class="error"')
-    .should('be.visible')
-    .should('have.text','Please enter a username and password.')
+        cy.getCredentials().then((credentials) => {
+        cy.get(loginPageLocators.usernameInput).type(credentials.username)
+        cy.get(loginPageLocators.loginButton).click()
+        cy.get(loginPageLocators.errorMessage)
+        .should('be.visible')
+        .should('have.text','Please enter a username and password.')
+        })
     })
 
     it('login  with valid credentials',() => {
-        cy.get('input[name="username"]').type('admin')
-        cy.get('input[name="password"]').type('admin')
-        cy.get('[type="submit"]').click()
+        cy.getCredentials().then((credentials) => {
+        cy.get(loginPageLocators.usernameInput).type(credentials.username)
+        cy.get(loginPageLocators.passwordInput).type(credentials.password)
+        cy.get(loginPageLocators.loginButton).click()
         cy.contains('h1.title', 'Accounts Overview').should('be.visible');
+        })
     })
   })
