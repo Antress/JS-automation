@@ -1,62 +1,48 @@
 
-const loginPageLocators = require('../loginPageLocators')
+import LoginPage from '../pageObject/loginPage'
+import BasePage from '../pageObject/basePage'
 
 describe('login site ',() => {    //Here you can see auto test for login page
 
-    beforeEach(()=>{
-        cy.visit('https://parabank.parasoft.com/')
-        cy.title().should('include','ParaBank');
-    })
+    const loginPage = new LoginPage(); // Create an instance of LoginPage
+
+    beforeEach(() => {
+        const basePage = new BasePage(); // Create an instance of BasePage
+        basePage.open('https://parabank.parasoft.com/');
+        cy.title().should('include', 'ParaBank');
+      });
 
     it('login fields are displayed',() => {
-        cy.get(loginPageLocators.usernameInput).should('be.visible')
-        cy.get(loginPageLocators.passwordInput).should('be.visible')
+        loginPage.usernameInputIsDisplayed()
+        loginPage.passwordInputIsDisplayed()
     })
-
+    
     it('login  with unvalid credentials',() => {
         cy.getCredentials().then((credentials) => {
-        cy.get(loginPageLocators.usernameInput).type(credentials.unvalid_username)
-        cy.get(loginPageLocators.passwordInput).type(credentials.unvalid_password)
-        cy.get(loginPageLocators.loginButton).click()
-        cy.get(loginPageLocators.errorMessage)
-        .should('be.visible')
-        .should('have.text','An internal error has occurred and has been logged.')
+        loginPage.loginWithCredentials(credentials.unvalid_username,credentials.unvalid_password).wrongCredentialsErrorMessageIsDispalyed()
         })
     })
 
     it('Error message is displayed after leaving all fields empty',() => {
-        cy.get(loginPageLocators.loginButton).click()
-        cy.get(loginPageLocators.errorMessage)
-        .should('be.visible')
-        .should('have.text','Please enter a username and password.')
-    })
-
-    it('Error message is displayed after leaving password field empty',() => {
-        cy.getCredentials().then((credentials) => {
-        cy.get(loginPageLocators.passwordInput).type(credentials.password)
-        cy.get(loginPageLocators.loginButton).click()
-        cy.get(loginPageLocators.errorMessage)
-        .should('be.visible')
-        .should('have.text','Please enter a username and password.')
-        })
+       loginPage.clickOnTheLoginButton().errorMessageIsDispalyed()
     })
 
     it('Error message is displayed after leaving username field empty',() => {
         cy.getCredentials().then((credentials) => {
-        cy.get(loginPageLocators.usernameInput).type(credentials.username)
-        cy.get(loginPageLocators.loginButton).click()
-        cy.get(loginPageLocators.errorMessage)
-        .should('be.visible')
-        .should('have.text','Please enter a username and password.')
+        loginPage.writePassword(credentials.password).clickOnTheLoginButton().errorMessageIsDispalyed()
         })
     })
 
-    it('login  with valid credentials',() => {
+    it('Error message is displayed after leaving password field empty',() => {
         cy.getCredentials().then((credentials) => {
-        cy.get(loginPageLocators.usernameInput).type(credentials.username)
-        cy.get(loginPageLocators.passwordInput).type(credentials.password)
-        cy.get(loginPageLocators.loginButton).click()
-        cy.contains('h1.title', 'Accounts Overview').should('be.visible');
+        loginPage.writeUsername(credentials.username).clickOnTheLoginButton().errorMessageIsDispalyed()
         })
     })
-  })
+
+    it('login with valid credentials', () => {
+        cy.getCredentials().then((credentials) => {
+          loginPage.loginWithCredentials(credentials.username, credentials.password);
+          cy.contains('h1.title', 'Accounts Overview').should('be.visible');
+        }); 
+    })
+})
