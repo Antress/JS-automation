@@ -45,6 +45,4 @@ describe('customer care',() =>{
         .clickOnTheSendButton()
         .customerCareContactYouMessageIsDisplayed()
     })
-
-    
 })
