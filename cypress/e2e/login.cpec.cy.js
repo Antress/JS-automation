@@ -2,14 +2,15 @@
 import LoginPage from '../pageObject/loginPage'
 import BasePage from '../pageObject/basePage'
 
-describe('login site ',() => {    //Here you can see auto test for login page
+describe('login site ',() => {    
 
-    const loginPage = new LoginPage(); // Create an instance of LoginPage
+    let loginPage;
+    let basePage;
 
     beforeEach(() => {
-        const basePage = new BasePage(); // Create an instance of BasePage
-        basePage.open('https://parabank.parasoft.com/');
-        cy.title().should('include', 'ParaBank');
+        basePage = new BasePage(); 
+        loginPage = new LoginPage();
+        basePage.open('https://parabank.parasoft.com/').logoIsDisplayed();
       });
 
     it('login fields are displayed',() => {
