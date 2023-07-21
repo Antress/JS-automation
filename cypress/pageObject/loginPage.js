@@ -19,13 +19,6 @@ class LoginPage extends BasePage{
 
     }
 
-    loginWithCredentials(username, password) {
-        this.usernameInput.type(username)
-        this.passwordInput.type(password)
-        this.loginButton.click()
-        return this
-    }
-
     writeUsername(username){
         this.usernameInput.type(username)
         return this
@@ -38,6 +31,13 @@ class LoginPage extends BasePage{
 
     clickOnTheLoginButton(){
         this.loginButton.click()
+        return this
+    }
+
+    loginWithCredentials(username, password) {
+        this.writeUsername
+        this.writePassword
+        this.clickOnTheLoginButton
         return this
     }
 
