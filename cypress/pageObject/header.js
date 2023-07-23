@@ -6,10 +6,6 @@ class Header extends BasePage{
         return cy.get('input[name="username"]')
     }
 
-    get aboutUsPageButton(){
-        return cy.get('input[name="username"]')
-    }
-
     get customerCarePageButton(){
         return cy.get('input[name="username"]')
     }
@@ -18,20 +14,25 @@ class Header extends BasePage{
         return cy.get('input[name="username"]')
     }
 
-    get productPageButton(){
-        return cy.get('input[name="username"]')
-    }
-
-    get locationsPageButton(){
-        return cy.get('input[name="username"]')
-    }
-
-    get adminPageButton(){
-        return cy.get('input[name="username"]')
-    }
-
     get logo(){
         return cy.get('input[name="username"]')
     }
 
+    goTotheHomePage(){
+        this.homePageButton.click()
+        return new HomePage
+    }
+
+    goToTheCustomerCarePage(){
+        this.customerCarePageButton.click()
+        return new CustomerCarePage()
+    }
+
+    goTotheServicesPage(){
+        this.servicesPageButton.click()
+        return new ServicesPage()
+    }
+
 }
+
+export default Header

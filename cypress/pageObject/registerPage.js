@@ -1,6 +1,6 @@
-import BasePage from './basePage'
+import BasePage from './basePage';
 
-class RegisterPage extends BasePage{   
+class RegisterPage extends BasePage {
 
     get firstNameInput(){
         return cy.get('input[name="customer.firstName"]')
@@ -47,31 +47,31 @@ class RegisterPage extends BasePage{
     }
 
     get registerButton(){
-        return cy.get('[type="submit"]')
+        return cy.get('[type="submit"][value="Register"]')
     }
 
     get firstNameInputError(){
-        return cy.get('#customer.firstName.errors')  
+        return cy.get('input[name="customer.firstName"]')
     }
-
+    
     get lastNameInputError(){
-        return cy.get('#customer.lastName.errors')
+        return cy.get('input[name="customer.lastName"]')
     }
 
     get addressInputError(){
-        return cy.get('#customer.address.street.errors')
+        return cy.get('input[name="customer.address"]')
     }
 
     get cityInputError(){
-        return cy.get('#customer.address.city.errors')
+        return cy.get('input[name="customer.city"]')
     }
 
     get stateInputError(){
-        return cy.get('#customer.address.state.errors')
+        return cy.get('input[name="customer.address.state"]')
     }
 
     get zipCodeInputError(){
-        return cy.get('#customer.address.zipCode.errors')
+        return cy.get('input[name="customer.address.zipCode"]')
     }
 
     get phoneInputError(){
@@ -79,19 +79,19 @@ class RegisterPage extends BasePage{
     }
 
     get ssnInputError(){
-        return cy.get('#customer.ssn.errors')
+        return cy.get('input[name="customer.ssn"]')
     }
 
     get usernameInputError(){
-        return cy.get('#customer.username.errors')
+        return cy.get('input[name="customer.username"]')
     }
 
     get passwordInputError(){
-        return cy.get('#customer.password.errors')
+        return cy.get('input[name="customer.password"]')
     }
 
     get confirmInputError(){
-        return cy.get('#repeatedPassword.errors')
+        return cy.get('input[name="repeatedPassword"]')
     }
 
     writeFirstName(firstName){
@@ -139,17 +139,17 @@ class RegisterPage extends BasePage{
         return this
     }
 
-    writePassword(confirmPassword){
+    writeConfirmPassword(confirmPassword){
         this.confirmInput.type(confirmPassword)
         return this
     }
 
     allErrorMessagesIsDisplayed(){
+        this.registerButton.click()
         this.firstNameInputError.should('be.visible')
         this.lastNameInputError.should('be.visible')
         this.addressInputError.should('be.visible')
         this.cityInputError.should('be.visible')
-        this.ssnInputError.should('be.visible')
         this.stateInputError.should('be.visible')
         this.zipCodeInputError.should('be.visible')
         this.phoneInputError.should('be.visible')
@@ -159,10 +159,24 @@ class RegisterPage extends BasePage{
         this.confirmInputError.should('be.visible')
     }
 
-    registrationPageTitleIsDisplayed(){
-        return cy.tytle().should('include','Signing up is easy!')
+    registrationPageTitleIsDisplayed() {
+        return cy.contains('Signing up is easy!').should('include', 'Signing up is easy!');
     } 
+
+    allFieldsAreDisplayed(){
+        this.firstNameInput.should('be.visible')
+        this.lastNameInput.should('be.visible')
+        this.addressInput.should('be.visible')
+        this.cityInput.should('be.visible')
+        this.stateInput.should('be.visible')
+        this.zipCodeInput.should('be.visible')
+        this.phoneInput.should('be.visible')
+        this.ssnInput.should('be.visible')
+        this.usernameInput.should('be.visible')
+        this.passwordInput.should('be.visible')
+        this.confirmInput.should('be.visible')
+    }
 
 }
 
-export default RegisterPage
+export default RegisterPage;

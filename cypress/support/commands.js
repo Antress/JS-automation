@@ -34,7 +34,14 @@ Cypress.Commands.add('getCredentials', () => {
         email: config.email,
         unvalid_email: config.unvalid_email,
         phone_number: config.phone_number,
-        unvalid_phone_number: config.unvalid_phone_number
+        unvalid_phone_number: config.unvalid_phone_number,
+        city: config.city,
+        SSN: config.SSN,
+        address: config.address,
+        first_name: config.first_name,
+        last_name: config.last_name,
+        state: config.state,
+        zip_code: config.zip_code
       };
     });
   });

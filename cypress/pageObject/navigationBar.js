@@ -1,7 +1,7 @@
 import BasePage from "./basePage";
 import RegisterPage from "./registerPage";
 
-class NavigationBar{
+class NavigationBar extends BasePage{
 
     get aboutUsPage(){
         return cy.get('a[href="about.htm"]')
@@ -36,7 +36,7 @@ class NavigationBar{
    }
 
    get registerButton(){
-    return cy.get('a[href="register.htm"]')
+    return cy.contains('Register')
    }
 
    get loginButton(){
@@ -50,7 +50,7 @@ class NavigationBar{
 
     goToTheRegisterPage(){
         this.registerButton.click()
-        return RegisterPage
+        return new RegisterPage();
     }
 
     goToTheForgotLogin(){

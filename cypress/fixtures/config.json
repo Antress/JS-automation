@@ -6,5 +6,12 @@
     "email": "automationTest@gmail.com",
     "unvalid_email": "///",
     "phone_number": "0000000000",
-    "unvalid_phone_number": "///"
+    "unvalid_phone_number": "///",
+    "city": "London",
+    "SSN": "12345",
+    "address": "Main street",
+    "first_name": "firstName",
+    "last_name": "lastName",
+    "state": "London",
+    "zip_code": "12345"
 }
